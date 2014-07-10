@@ -1,0 +1,167 @@
+<html>
+    <head>
+        <title>Example using validatejs</title>
+        <script src="validate.js"></script>
+        <style>
+            div{
+                width:200px;
+                padding:5px;
+                background:#ccc;
+                margin:10px 0;
+            }
+
+            input.error{
+                border:solid 1px red;
+            }
+        </style>
+    </head>
+    <body>
+        <ul>
+            <li>
+                <a onclick="SignIn()" href="javascript:;">Sign in</a>
+            </li>
+            <li>
+                <a onclick="Recover()" href="javascript:;">Recover password</a>
+            </li>
+            <li>
+                <a onclick="SignUp()" href="javascript:;">Sign up</a>
+            </li>
+        </ul>
+        <!-- Form 1 -->
+        <div>
+            <form id="formSignIn">
+                <p>
+                    <input disabled="true" readonly="true" id="signinEmail" data-required="true" data-validate="email" type="email" placeholder="Email" />
+                </p>
+                <p>
+                    <input disabled id="signinPassword" data-required="true" data-validate="length" data-length="4" type="password" placeholder="Password" />
+                </p>
+                <p>
+                    <a data-submit="true" href="javascript:;">Sign in</a>
+                    <input disabled type="submit" style="width:0;height:0;position:absolute;top:-10000px" />
+                </p>
+            </form>
+        </div>
+
+        <!-- Form 2 -->
+        <div>
+            <form id="formRecover">
+                <p>
+                    <input disabled="true" readonly="true" id="recoverEmail" data-required="true" data-validate="email" type="email" placeholder="Email" />
+                </p>
+                <p>
+                    <a data-submit="true" href="javascript:;">Recover</a>
+                    <input disabled type="submit" style="width:0;height:0;position:absolute;top:-10000px" />
+                </p>
+            </form>
+        </div>
+
+        <!-- Form 3 -->
+        <div>
+            <form id="formSignUp">
+                <p>
+                    <input disabled="true" readonly="true" id="signupEmail" data-required="true" data-validate="email" type="email" placeholder="Email" />
+                </p>
+                <p>
+                    <input disabled id="signupPassword" data-required="true" data-validate="length" data-length="4" type="password" placeholder="Password" />
+                </p>
+                <p>
+                    <a data-submit="true" href="javascript:;">Signup</a>
+                    <input disabled type="submit" style="width:0;height:0;position:absolute;top:-10000px" />
+                </p>
+            </form>
+        </div>
+
+        <script>
+            function disableAll(){
+                var inputs = document.querySelectorAll("input");
+                for(var i=0; i < inputs.length; i++){
+                    inputs[i].setAttribute("disabled", "true");
+                    inputs[i].setAttribute("readonly", "true");
+                }   
+
+                var a = document.querySelectorAll("a");
+                for(var i=0; i < a.length; i++){
+                    a[i].setAttribute("disabled", "true");
+                    a[i].setAttribute("readonly", "true");
+                } 
+            }
+
+            function enableFormElements(form){
+                var inputs = form.querySelectorAll("input");
+                
+                for(var i=0; i < inputs.length; i++){
+                    inputs[i].removeAttribute("disabled");
+                    inputs[i].removeAttribute("readonly");
+                }
+
+                var a = form.querySelectorAll("a");
+                for(var i=0; i < a.length; i++){
+                    a[i].removeAttribute("disabled");
+                    a[i].removeAttribute("readonly");
+                }
+            }
+
+            function SignIn(){
+                disableAll();
+
+                var form = document.getElementById("formSignIn");
+
+                enableFormElements(form);
+            }
+
+            function Recover(){
+                disableAll();
+
+                var form = document.getElementById("formRecover");
+
+                enableFormElements(form);
+            }
+
+            function SignUp(){
+                disableAll();
+
+                var form = document.getElementById("formSignUp");
+
+                enableFormElements(form);
+            }
+
+            document.getElementById("signinEmail").addEventListener("validation", function(e){
+                if (e.detail) this.classList.add("error");
+                else this.classList.remove("error");
+            });
+
+            document.getElementById("signinPassword").addEventListener("validation", function(e){
+                if (e.detail) this.classList.add("error");
+                else this.classList.remove("error");
+            });
+
+            document.getElementById("recoverEmail").addEventListener("validation", function(e){
+                if (e.detail) this.classList.add("error");
+                else this.classList.remove("error");
+            });
+
+            document.getElementById("signupEmail").addEventListener("validation", function(e){
+                if (e.detail) this.classList.add("error");
+                else this.classList.remove("error");
+            });
+
+            document.getElementById("signupPassword").addEventListener("validation", function(e){
+                if (e.detail) this.classList.add("error");
+                else this.classList.remove("error");
+            });
+
+            document.getElementById("formSignIn").addEventListener("send", function(){
+                alert("Send ajax request to sign-in remote service");
+            });
+
+            document.getElementById("formRecover").addEventListener("send", function(){
+                alert("Send ajax request to recover password remote service");
+            });
+
+            document.getElementById("formSignUp").addEventListener("send", function(){
+                alert("Send ajax request to sign-up remote service");
+            });
+        </script>
+    </body>
+</html>
